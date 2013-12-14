@@ -87,5 +87,13 @@
       </configuration>
     </plugin>
   </plugins>
+  <resources>
+    <resource>
+      <directory>/usr/lib/hbase/conf/<directory>
+    </resource>
+    <resource>
+      <directory>/etc/zookeeper/conf<directory>
+    </resource>
+  </resources>
   </build>
 </project>

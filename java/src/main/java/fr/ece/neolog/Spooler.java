@@ -7,6 +7,8 @@ import org.apache.hadoop.conf.*;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.HTableDescriptor;
+import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapreduce.*;
@@ -24,18 +26,18 @@ public class Spooler {
 	private static HTable hTable = null;
 	
 	public static void main(String[] args) throws Exception {
-		Path input = new Path((args.length>2) ? args[2] : "input");
+		Path input = new Path((args.length>1) ? args[1] : "input");
 		
 		System.out.println("*** INTPUT PATH: "+input.toUri().toString());
 		
 		Configuration conf = new Configuration();
-		
+		HBaseAdmin hbase = new HBaseAdmin(conf);
+		HTableDescriptor desc = new HTableDescriptor("TEST");
 		System.out.println("*** Creating HBase Configuration:");
 		Configuration hConf = HBaseConfiguration.create();
 		
 		System.out.println("*** Opening HTABLE :");
-		hTable = new HTable(hConf,(args.length>1) ? args[1] : "dictionnary");
-		
+		hTable = new HTable(hConf,(args.length>0) ? args[0] : "dictionnary");
 		System.out.println("*** Creating Job");
 		Job job = new Job(conf, "neolog");
 		job.setMapperClass(Map.class);
