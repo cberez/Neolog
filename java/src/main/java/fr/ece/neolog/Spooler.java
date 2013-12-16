@@ -66,8 +66,8 @@ public class Spooler {
 		}
 	}
 	
-	public static class Map extends Mapper<LongWritable, Text, Text, NullWritable> {
-		public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+	public static class Map extends Mapper<NullWritable, Text, NullWritable, Text> {
+		public void map(NullWritable key, Text value, Context context) throws IOException, InterruptedException {
 			JsonObject json = Json.createReader(new StringReader(value.toString())).readObject();
 			StringTokenizer text = new StringTokenizer(json.getString("text"));
 			while(text.hasMoreTokens()){
