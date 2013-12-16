@@ -1,4 +1,4 @@
-package fr.ece.html_to_text;
+package fr.ece.neolog;
 
 import java.io.IOException;
 
