@@ -23,7 +23,8 @@
     "mocha": "*",
     "chai": "*",
     "sinon": "*",
-    "supervisor": "*"
+    "supervisor": "*",
+    "twit": "*"
   },
   "license": "BSD-2-Clause"
 }
