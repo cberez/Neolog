@@ -12,7 +12,6 @@ import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapreduce.*;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
@@ -44,13 +43,13 @@ public class Spooler {
 		 	job.setOutputKeyClass(NullWritable.class);
 			job.setOutputValueClass(Text.class);
 	 		job.setNumReduceTasks(0);
-			job.setInputFormatClass(TextInputFormat.class);
+			job.setInputFormatClass(WholeTextInputFormat.class);
 			job.setOutputFormatClass(TextOutputFormat.class);
 			FileInputFormat.addInputPath(job, input);
 			FileOutputFormat.setOutputPath(job, new Path("output/"+System.currentTimeMillis()));
 			try {
 				job.waitForCompletion(true);
-			} catch (ClassNotFoundException | InterruptedException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
