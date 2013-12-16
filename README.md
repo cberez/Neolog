@@ -1,2 +1,2 @@
-Neologister
-===========
+Neolog
+======
