@@ -1,0 +1,19 @@
+{
+  "author": "César Berezowski <c.berezowski@gmail.com> (github.com/cesarBere)",
+  "name": "application-name",
+  "version": "0.0.1",
+  "description": "ECE Software Quality project",
+  "private": true,
+  "main": "app.js",
+  "repository":{ 
+    "type":"git",
+    "url":"https://github.com/cesarBere/Neolog.git"
+  },
+  "engines":{
+    "node":"~0.6.14"
+  },
+  "dependencies": {
+    "twit": "*"
+  },
+  "license": "BSD-2-Clause"
+}
