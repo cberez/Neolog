@@ -15,6 +15,5 @@ build
 
 node_modules
 
-# Sublime Text
-*.sublime-workspace
-*.sublime-project
+# Others
+~*
