@@ -1,5 +1,28 @@
-extends layout
+extend layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+
+
+  div.container
+    div.content
+      div.page-header
+        h1 Neolog 
+      div.row-fluid
+        div.span9
+          div.hero-unit
+            p Neolog tracks the use of neologisms on social networks, just look for a word and we'll tell you all about it !
+            br
+            form(role="form").form-inline
+              div.form-group
+                input(type="text" placeholder="Enter a word").form-control#word
+              span 
+              button(type="submit").btn.btn-default#submit Look it up
+            br
+            a(href="/list_all").btn.btn-info See all words
+
+  script.
+    $('#submit').click(function(e){
+      e.preventDefault();
+      var word = $('#word').val().replace(/(([^\s]+\s\s*){1})(.*)/,"$1");
+      window.location.replace('/' + word);
+    });
