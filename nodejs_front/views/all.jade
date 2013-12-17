@@ -1,0 +1,28 @@
+extend layout
+
+block content
+  
+  :stylus
+    ul 
+      -webkit-column-count: 3;
+      -moz-column-count: 3;
+      -o-column-count: 3;
+      column-count: 3;
+      list-style-type: none;
+
+  div.container
+    div.content
+      div.page-header
+        h1 Neolog 
+          small #{word}
+      div.row-fluid
+        div.span9
+          ul#words
+            li 1
+            li 1
+            li 1
+            li 1
+            li 1
+            li 1
+            li 1
+            li 1
