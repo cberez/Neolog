@@ -1,7 +1,6 @@
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
-var twitter = require('./routes/twitter');
 var http = require('http');
 var path = require('path');
 
@@ -27,13 +26,26 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-//app.get('/', routes.index);
-//app.get('/users', user.list);
-app.get('/tweets/:word/:date/:count', function(req){
-	twitter.searchTweets(req.params.word, req.params.date, req.params.count, function(tweets){
-		console.log(tweets);
-	});
-})
+app.get('/', routes.index);
+app.get('/list_all', function(req, res){
+	res.render('all', {
+		word: 'All words'
+	})
+});
+app.get('/:word', function(req, res){
+	res.render('word', {
+		word: req.params.word
+	})
+});
+app.post('/:word/ignore', function(req){
+
+});
+app.post('/:word/track', function(req){
+
+});
+app.post('/:word/untrack', function(req){
+
+});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
