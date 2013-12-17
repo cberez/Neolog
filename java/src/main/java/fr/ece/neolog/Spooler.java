@@ -72,10 +72,10 @@ public class Spooler {
 	public static class Map extends Mapper<NullWritable, Text, NullWritable, Text> {
 		public void map(NullWritable key, Text value, Context context) throws IOException, InterruptedException {
 			JsonObject json = Json.createReader(new StringReader(value.toString())).readObject();
-			StringTokenizer text = new StringTokenizer(json.getString("text"));
+			StringTokenizer text = new StringTokenizer(json.getString("text").replaceAll("[!.,/\\|()#\":]","").replace('-', ' '));
 			while(text.hasMoreTokens()){
-				String word = text.nextToken().toLowerCase().replaceAll("[!.,/\\|()#\":]", "");
-				if(Pattern.matches("[A-Za-zäöüÄÖÜÉÈëéêèáàù-]*", word)){
+				String word = text.nextToken();
+				if(Pattern.matches("[A-Za-zäöüÄÖÜÉÈëéêèáàù]*", word)){
 					System.out.println("Working on "+word);
 					if(dico.isInDictionnary(word)){
 						System.out.println("\t"+word+" is known");
@@ -88,7 +88,6 @@ public class Spooler {
 						System.out.println(word+" is not known");
 						dico.addNeologism(word);
 						//dico.addTrack(word, json.getString("type"), json.getString("age"), json.getString("location"), json.getString("timestamp"));
-				
 					}
 				}
 			}
