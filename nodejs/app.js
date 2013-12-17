@@ -1,6 +1,5 @@
 var express = require('express');
-var routes = require('./routes');
-var user = require('./routes/user');
+var hbase = require('./routes/hbase');
 var http = require('http');
 var path = require('path');
 
@@ -26,25 +25,32 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
+app.get('/', function(req, res){
+	res.render('index');
+});
+
 app.get('/list_all', function(req, res){
 	res.render('all', {
 		word: 'All words'
 	})
 });
+
 app.get('/:word', function(req, res){
 	res.render('word', {
 		word: req.params.word
 	})
 });
+
 app.post('/:word/ignore', function(req){
-
+	// hbase.ignore(req.params.word);
 });
+
 app.post('/:word/track', function(req){
-
+	// hbase.ignore(req.params.word);
 });
-app.post('/:word/untrack', function(req){
 
+app.post('/:word/untrack', function(req){
+	// hbase.ignore(req.params.word)
 });
 
 http.createServer(app).listen(app.get('port'), function(){
