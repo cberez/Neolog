@@ -3,8 +3,11 @@ package fr.ece.neolog;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
+
 import javax.json.Json;
 import javax.json.JsonObject;
+
 import org.apache.hadoop.conf.*;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -71,18 +74,22 @@ public class Spooler {
 			JsonObject json = Json.createReader(new StringReader(value.toString())).readObject();
 			StringTokenizer text = new StringTokenizer(json.getString("text"));
 			while(text.hasMoreTokens()){
-				String word = text.nextToken().toLowerCase();
-				if(dico.isInDictionnary(word)){	
-					System.out.println(word+" is known");
-					if(dico.isTracked(word)){
-						System.out.println(word+" is tracked");
-						//dico.addTrack(word, json.getString("type"), json.getString("age"), json.getString("location"), json.getString("timestamp"));
+				String word = text.nextToken().toLowerCase().replaceAll("[!.,/\\|()#\":]", "");
+				if(Pattern.matches("[A-Za-zäöüÄÖÜÉÈëéêèáàù-]*", word)){
+					System.out.println("Working on "+word);
+					if(dico.isInDictionnary(word)){
+						System.out.println("\t"+word+" is known");
+						if(dico.isTracked(word)){
+							System.out.println("\t"+word+" is tracked");
+							dico.addTrack(word, json.getString("type"), json.getString("age"), json.getString("location"), json.getString("timestamp"));
+						}
 					}
-				}
-				else{
-					System.out.println(word+" is not known");
-					//dico.addNeologism(word);
-					//dico.addTrack(word, json.getString("type"), json.getString("age"), json.getString("location"), json.getString("timestamp"));
+					else{
+						System.out.println(word+" is not known");
+						dico.addNeologism(word);
+						//dico.addTrack(word, json.getString("type"), json.getString("age"), json.getString("location"), json.getString("timestamp"));
+				
+					}
 				}
 			}
 		}

@@ -16,7 +16,7 @@ public class Dictionnary extends HTable{
 	public Dictionnary(Configuration conf, String str) throws IOException{
 		super(conf,str);
 	}
-	public void addNeologism(String word){
+	/*public void addNeologism(String word){
 		byte[] rowKey = word.getBytes();
 		List<Put> ap = new ArrayList<Put>();
 		Put p = new Put(rowKey);
@@ -24,6 +24,22 @@ public class Dictionnary extends HTable{
 		ap.add(p);
 		p = new Put(rowKey);
 		p.add(c.infos,c.track,c.yes);
+		ap.add(p);
+		try {
+			this.put(ap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}*/
+	public void addNeologism(String word){
+		byte[] rowKey = word.getBytes();
+		List<Put> ap = new ArrayList<Put>();
+		Put p = new Put(rowKey);
+		p.add(c.infos,c.type,c.exist);
+		ap.add(p);
+		p = new Put(rowKey);
+		p.add(c.infos,c.track,c.no);
 		ap.add(p);
 		try {
 			this.put(ap);
