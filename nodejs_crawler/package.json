@@ -12,8 +12,17 @@
   "engines":{
     "node":"~0.6.14"
   },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha -u tdd"
+  },
   "dependencies": {
-    "twit": "*"
+    "twit": "*",
+    "mocha": "*",
+    "chai": "*",
+    "chai-fs": "*",
+    "should": "*",
+    "expect": "*",
+    "sinon": "*"
   },
   "license": "BSD-2-Clause"
 }

@@ -6,49 +6,28 @@ var T         = new Twit({
 		              access_token_secret:  ''
 		        		});
 var fs        = require('fs');
+var utils     = require('./src/utils')
 
 var dir = 0;
 var file = 0;
 
-fs.mkdir('./../input');
-newDir(0, null);
+var dirPath = './../input';
+
+fs.mkdir(dirPath);
+utils.newDir(0, dirPath);
 
 var stream = T.stream('statuses/sample', { language: 'fr' });
 stream.on('tweet', function(tweet){
-  clearTweet(tweet, function(infos){
+  utils.clearTweet(tweet, function(infos){
     if(file < 100){
       file++;
-      writeToFile(infos, file, dir);
+      utils.writeToFile(infos, file, dir, dirPath);
     }
     else {
       dir++;
       file = 1;
-      newDir(dir);
-      writeToFile(infos, file, dir)
+      utils.newDir(dir, dirPath);
+      utils.writeToFile(infos, file, dir, dirPath)
     }
   });
 });
-
-function clearTweet(tweet, callback){
-  var infos = JSON.stringify({
-    timestamp: tweet.created_at,
-    type: "twitter",
-    text: tweet.text,
-    pseudo: tweet.user.screen_name,
-    location: tweet.user.location
-  });
-
-  callback(infos);
-}
-
-function writeToFile(infos, file, dir){
-  fs.writeFile('./../input/dir_' + dir + '/file_' + file, infos, function(err){
-    if(err) throw err;
-    console.log('Tweet ' + file + ' witten');
-  });
-}
-
-function newDir(dir){
-  console.log('Creating dir_' + dir);
-  fs.mkdirSync('./../input/dir_' + dir, 0755, null);
-}
