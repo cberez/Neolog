@@ -16,7 +16,8 @@ public class Dictionnary extends HTable{
 	public Dictionnary(Configuration conf, String str) throws IOException{
 		super(conf,str);
 	}
-	/*public void addNeologism(String word){
+	
+	public void addNeologism(String word){
 		byte[] rowKey = word.getBytes();
 		List<Put> ap = new ArrayList<Put>();
 		Put p = new Put(rowKey);
@@ -31,30 +32,14 @@ public class Dictionnary extends HTable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}*/
-	public void addNeologism(String word){
-		byte[] rowKey = word.getBytes();
-		List<Put> ap = new ArrayList<Put>();
-		Put p = new Put(rowKey);
-		p.add(c.infos,c.type,c.exist);
-		ap.add(p);
-		p = new Put(rowKey);
-		p.add(c.infos,c.track,c.no);
-		ap.add(p);
-		try {
-			this.put(ap);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	public boolean isInDictionnary(String word) throws IOException{
 		return this.exists(new Get(word.getBytes()));
 	}
 	
-	public void addTrack(String word, String type, String age, String location, String timestamp) throws IOException{
+	public void addTrack(String word, String pseudo,String type, String age, String location, String timestamp) throws IOException{
 		Put p = new Put(Bytes.toBytes(word));
-		p.add(c.track, timestamp.getBytes(), Bytes.toBytes(type+':'+age+':'+location));
+		p.add(c.track, Bytes.toBytes(pseudo+':'+timestamp), Bytes.toBytes(type+':'+age+':'+location));
 		this.put(p);
 	}
 	

@@ -78,16 +78,16 @@ public class Spooler {
 				if(Pattern.matches("[A-Za-zäöüÄÖÜÉÈëéêèáàù]*", word)){
 					System.out.println("Working on "+word);
 					if(dico.isInDictionnary(word)){
-						System.out.println("\t"+word+" is known");
+						System.out.println("* "+word+" is known");
 						if(dico.isTracked(word)){
-							System.out.println("\t"+word+" is tracked");
-							dico.addTrack(word, json.getString("type"), json.getString("age"), json.getString("location"), json.getString("timestamp"));
+							System.out.println("* "+word+" is tracked");
+							dico.addTrack(word, json.getString("pseudo"),json.getString("type"), json.getString("age"), json.getString("location"), json.getString("timestamp"));
 						}
 					}
 					else{
-						System.out.println(word+" is not known");
+						System.out.println("* Adding "+word);
 						dico.addNeologism(word);
-						//dico.addTrack(word, json.getString("type"), json.getString("age"), json.getString("location"), json.getString("timestamp"));
+						dico.addTrack(word, json.getString("pseudo"),json.getString("type"), json.getString("age"), json.getString("location"), json.getString("timestamp"));
 					}
 				}
 			}

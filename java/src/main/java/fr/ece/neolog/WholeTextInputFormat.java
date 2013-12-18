@@ -17,5 +17,4 @@ public class WholeTextInputFormat extends FileInputFormat<NullWritable, Text> {
 		// TODO Auto-generated method stub
 		return new WholeFileRecordReader();
 	}
-	
 }
