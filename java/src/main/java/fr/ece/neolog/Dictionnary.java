@@ -46,10 +46,13 @@ public class Dictionnary extends HTable{
 	public boolean isTracked(String word) throws IOException{
 		KeyValue kv =this.get(new Get(word.getBytes())).getColumnLatest(c.infos, c.track);
 		if(kv!=null){
+			System.out.println(kv.getValue()+":"+c.yes);
 			if(kv.getValue()==c.yes){
+				System.out.println("RETURN TRUE");
 				return true;
 			}
 		}
+		System.out.println("IS NOT TRACKED BECAUSE NOT IN TABLE");
 		return false;
 	}
 }

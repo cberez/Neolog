@@ -72,7 +72,7 @@ public class Spooler {
 	public static class Map extends Mapper<NullWritable, Text, NullWritable, Text> {
 		public void map(NullWritable key, Text value, Context context) throws IOException, InterruptedException {
 			JsonObject json = Json.createReader(new StringReader(value.toString())).readObject();
-			StringTokenizer text = new StringTokenizer(json.getString("text").replaceAll("[!.,/\\|()#\":]","").replace('-', ' '));
+			StringTokenizer text = new StringTokenizer(json.getString("text").toLowerCase().replaceAll("[!.,/\\|()#\":]","").replace('-', ' '));
 			while(text.hasMoreTokens()){
 				String word = text.nextToken();
 				if(Pattern.matches("[A-Za-zäöüÄÖÜÉÈëéêèáàù]*", word)){
